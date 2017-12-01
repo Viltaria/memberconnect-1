@@ -282,7 +282,7 @@ app.put('/achievements/edit', function (req, res) {
 			console.error('Error Editing. @mongodb');
 		}
 		db.close();
-		return res.send("success"));
+		return res.send("success");
 	});
 });
 
