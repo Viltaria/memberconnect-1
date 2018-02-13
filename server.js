@@ -238,16 +238,17 @@ app.get('/getMember/:param?', (req, res) => {
 				if (err) {
 					return console.error('Error converting data to array');
 				}
+				const valid = [];
 				const string = req.params.param;
 				const id = string.slice(string.indexOf('=') + 1, string.length);
-				res.json(result.filter((e,i,a) => {
+				result.forEach((e,i,a) => {
 					console.log(e._id);
-					console.log(id);
-					if(e._id == id) {
-						console.log('Found!!');
+					if(e._id === id) {
+						console.log('found this guy');
+						valid.push(e);
 					}
-					return e._id == id;
-				}));
+				});
+				res.json(valid);
 			});
 		});
 	}
