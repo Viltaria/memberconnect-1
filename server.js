@@ -137,6 +137,7 @@ app.put('/edit', function (req, res) {
 });
 
 app.delete('/edit', function (req, res) {
+	console.log(req.body);
 	if (
 		"_id" in req.body
 		)
@@ -157,7 +158,7 @@ app.delete('/edit', function (req, res) {
 	else 
 	{
 		console.log(`${JSON.stringify(req.body)} did not pass validation. @app.delete /edit`);
-		return errors;
+		return `${JSON.stringify(req.body)} did not pass validation. @app.delete /edit`;
 	}
 });
 
