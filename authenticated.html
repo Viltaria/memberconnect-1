@@ -57,7 +57,9 @@
 								<span style="cursor:pointer;" class="activator center-align"><i class="material-icons">navigation</i></span>
 							</div>
 							<div ng-if="username == {{e.username}}" class="card-action center-align">
-								<span data-first_name="{{e.first_name}}"
+								<span
+								    data-_id="{{e._id}}" 
+									data-first_name="{{e.first_name}}"
 									data-last_name="{{e.last_name}}"
 									data-affiliation="{{e.affiliation}}"
 									data-role="{{e.role}}"
@@ -110,7 +112,9 @@
 	<script type="text/javascript">
 		var controllers = $(`
 		<div class="card-action center-align">
-      <span data-first_name="{{e.first_name}}"
+      <span
+        data-_id="{{e._id}}" 
+        data-first_name="{{e.first_name}}"
         data-last_name="{{e.last_name}}"
         data-affiliation="{{e.affiliation}}"
         data-role="{{e.role}}"
@@ -148,6 +152,7 @@
 					<form class="col s12">
 						<div class="row">
 							<div class="input-field col s6">
+								<input id="_id" type="hidden" value="${$(that).data()._id}">
 								<input autofocus="autofocus" value="${$(that).data().first_name}" id="first_name" type="text" class="validate">
 								<label for="first_name">First Name</label>
 							</div>
@@ -181,6 +186,7 @@
 				card.append(form);
 				$('#finish').click(function() {
 					let obj = {
+						_id: $('#_id').val(),
 						first_name: $('#first_name').val(),
 						last_name: $('#last_name').val(),
 						affiliation: $('#affiliation').val(),
@@ -218,7 +224,7 @@
       $.ajax({
         url: 'https://dahi.manoa.hawaii.edu/njs/edit',
         type: 'PUT',
-				data: obj
+		data: obj
       })
     }
   </script>
