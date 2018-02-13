@@ -241,8 +241,9 @@ app.get('/getMember/:param?', (req, res) => {
 				const string = req.params.param;
 				const id = string.slice(string.indexOf('=') + 1, string.length);
 				res.json(result.filter((e,i,a) => {
-					console.log(id);
-					console.log(e._id);
+					if(e._id === id) {
+						console.log('Found!!');
+					}
 					return e._id === id;
 				}));
 			});
