@@ -177,8 +177,10 @@ app.get('/data/:param?', (req, res) => {
 			const valid = [];
 			if (req.params.param) {
 				const params = req.params.param.split('|');
+				console.log(params);
 				const keys = ['_id', 'first_name', 'last_name', 'affiliation', 'role', 'video_link', 'video', 'email', 'website_link'];
 				if (params.length === 1 && keys.includes(params[0])) {
+					console.log('RETURNED IN HERE!!');
 					data.forEach(e => {
 						let temp = {};
 						temp[`${params[0]}`] = e[params[0]];
@@ -193,6 +195,7 @@ app.get('/data/:param?', (req, res) => {
 							for (let i = 0; i < params.length; i++) { // Loops over all the parameters passed in the URL
 								if (params[i].includes('=')) {
 									const keyValue = params[i].split('=');
+									console.log(keyValue);
 									if (e[keyValue[0]] !== null || e[keyValue[0]] !== undefined) { // Checks if the key exists in the object
 										if (e[keyValue[0]].toString().toLowerCase().includes(keyValue[1].toLowerCase())) { // Checks if the value exists inside the object key
 											found = true;
