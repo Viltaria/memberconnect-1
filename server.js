@@ -137,7 +137,6 @@ app.put('/edit', function (req, res) {
 });
 
 app.delete('/edit', function (req, res) {
-	console.log(req.body);
 	if (
 		"_id" in req.body
 		)
@@ -267,6 +266,34 @@ app.get('/achievements/:user?', (req, res) => {
 			return res.json(result);
 		});
 	});
+});
+
+app.get('/getAchievement/param:?', (req, res) => {
+	if (
+		req.params.param.includes("id")
+		)
+	{
+		MongoClient.connect(process.env.MONGO_URI, function (err, db) {
+			if (err) {
+				return console.error('Connection Error. @mongodb');
+			}
+			db.collection('achievements').find().toArray(function (err, result) {
+				if (err) {
+					return console.error('Error converting data to array');
+				}
+				const string = req.params.param;
+				const id = string.slice(string.indexOf('=') + 1, string.length);
+				res.json(result.filter((e,i,a) => {
+					return e.id.toString() === id;
+				}));
+			});
+		});
+	}
+	else 
+	{
+		console.log(`Get Request did not pass validation. @app.get /getAchievement (needs id field)`);
+		res.json('Requires id parameter.');
+	}
 });
 
 app.post('/achievements/create', (req, res) => {
