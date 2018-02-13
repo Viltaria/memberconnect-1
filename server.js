@@ -227,7 +227,7 @@ app.get('/data/:param?', (req, res) => {
 
 app.get('/getMember/:param?', (req, res) => {
 	if (
-		"_id" in req.params.param
+		req.params.param.includes("_id")
 		)
 	{
 		MongoClient.connect(process.env.MONGO_URI, function (err, db) {
