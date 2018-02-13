@@ -268,7 +268,7 @@ app.get('/achievements/:user?', (req, res) => {
 	});
 });
 
-app.get('/getAchievement/param:?', (req, res) => {
+app.get('/getAchievement/:param?', (req, res) => {
 	if (
 		req.params.param.includes("id")
 		)
