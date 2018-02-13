@@ -137,9 +137,8 @@ app.put('/edit', function (req, res) {
 });
 
 app.delete('/edit', function (req, res) {
-	console.log(req.query);
 	if (
-		"_id" in req.body
+		"_id" in req.query
 		)
 	{
 		MongoClient.connect(process.env.MONGO_URI, function (err, db) {
@@ -157,8 +156,8 @@ app.delete('/edit', function (req, res) {
 	}
 	else 
 	{
-		console.log(`${JSON.stringify(req.body)} did not pass validation. @app.delete /edit`);
-		return `${JSON.stringify(req.body)} did not pass validation. @app.delete /edit`;
+		console.log(`${JSON.stringify(req.query)} did not pass validation. @app.delete /edit`);
+		return `${JSON.stringify(req.query)} did not pass validation. @app.delete /edit`;
 	}
 });
 
