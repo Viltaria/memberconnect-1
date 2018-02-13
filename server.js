@@ -137,10 +137,10 @@ app.put('/edit', function (req, res) {
 });
 
 app.delete('/edit', function (req, res) {
-	indicative.validateAll(req.body, {
-		_id: 'required'
-	})
-	.then(function() {
+	if (
+		"_id" in req.body
+		)
+	{
 		MongoClient.connect(process.env.MONGO_URI, function (err, db) {
 			if (err) {
 				return console.error('Connection Error. @mongodb');
@@ -153,11 +153,12 @@ app.delete('/edit', function (req, res) {
 			db.close();
 			return res;
 		});
-	})
-	.catch(function (errors) {
+	}
+	else 
+	{
 		console.log(`${JSON.stringify(req.body)} did not pass validation. @app.delete /edit`);
 		return errors;
-	});
+	}
 });
 
 app.get('/data/:param?', (req, res) => {
@@ -222,6 +223,33 @@ app.get('/data/:param?', (req, res) => {
 			return res.json(valid);
 		});
 	});
+});
+
+app.get('/getMember/:param?', (req, res) => {
+	if (
+		"_id" in req.body
+		)
+	{
+		console.log(req.params.param);
+		MongoClient.connect(process.env.MONGO_URI, function (err, db) {
+			if (err) {
+				return console.error('Connection Error. @mongodb');
+			}
+			db.collection('people').find().toArray(function (err, result) {
+				if (err) {
+					return console.error('Error converting data to array');
+				}
+				return result.map((e,i,a) => {
+					return e._id === req.params.param._id;
+				});
+			});
+		});
+	}
+	else 
+	{
+		console.log("No _id field");
+	}
+
 });
 
 app.get('/achievements/:user?', (req, res) => {
