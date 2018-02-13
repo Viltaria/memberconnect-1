@@ -137,6 +137,7 @@ app.put('/edit', function (req, res) {
 });
 
 app.delete('/edit', function (req, res) {
+	console.log(req.query);
 	if (
 		"_id" in req.body
 		)

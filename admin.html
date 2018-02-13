@@ -218,7 +218,6 @@
       });
     }, 1000);
     function deleteRequest(obj) {
-    	console.log(obj);
       $.ajax({
         url: 'https://dahi.manoa.hawaii.edu/njs/edit' + '?' + $.param({
         	_id: obj['_id']
