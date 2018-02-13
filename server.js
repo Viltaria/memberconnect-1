@@ -238,29 +238,18 @@ app.get('/getMember/:param?', (req, res) => {
 				if (err) {
 					return console.error('Error converting data to array');
 				}
-				const valid = [];
 				const string = req.params.param;
 				const id = string.slice(string.indexOf('=') + 1, string.length);
-				console.log('ID');
-				console.log(id);
-				console.log('ID');
-				result.forEach((e,i,a) => {
-					console.log(e._id);
-					console.log(e._id.toString())
-					console.log(e._id.toString() === '5a5e587025c2586a90cf4012');
-					if(e._id.toString(0) === id) {
-						console.log('found this guy');
-						valid.push(e);
-					}
-				});
-				res.json(valid);
+				res.json(result.filter((e,i,a) => {
+					return e._id.toString() === id;
+				}));
 			});
 		});
 	}
 	else 
 	{
-		console.log("No _id field");
-		res.json('bad query');
+		console.log(`Get Request did not pass validation. @app.get /getMember (needs _id field)`);
+		res.json('Requires _id parameter.');
 	}
 
 });

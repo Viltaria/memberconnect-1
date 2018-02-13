@@ -220,12 +220,7 @@
     function deleteRequest(obj) {
       $.ajax({
         url: 'https://dahi.manoa.hawaii.edu/njs/edit' + '?' + $.param({
-        	_id: obj['_id'],
-			first_name: obj['first_name'],
-			last_name: obj['last_name'],
-			affiliation: obj['affiliation'],
-			role: obj['role'],
-			email: obj['email']
+        	_id: obj['_id']
         }),
         type: 'DELETE'
       });
