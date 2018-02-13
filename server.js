@@ -226,8 +226,10 @@ app.get('/data/:param?', (req, res) => {
 });
 
 app.get('/getMember/:param?', (req, res) => {
+	console.log(req.params);
+	console.log(req.params.param);
 	if (
-		"_id" in req.body
+		"_id" in req.
 		)
 	{
 		console.log(req.params.param);
