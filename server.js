@@ -241,8 +241,11 @@ app.get('/getMember/:param?', (req, res) => {
 				const valid = [];
 				const string = req.params.param;
 				const id = string.slice(string.indexOf('=') + 1, string.length);
+				console.log('ID');
+				console.log(id);
+				console.log('ID');
 				result.forEach((e,i,a) => {
-					console.log(e._id);
+					console.log(e._id === '5a5e587025c2586a90cf4012');
 					if(e._id === id) {
 						console.log('found this guy');
 						valid.push(e);
