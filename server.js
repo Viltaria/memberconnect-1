@@ -240,15 +240,16 @@ app.get('/getMember/:param?', (req, res) => {
 				}
 				const string = req.params.param;
 				const id = string.slice(string.indexOf('=') + 1, string.length);
-				return result.map((e,i,a) => {
+				res.json(es.jresult.map((e,i,a) => {
 					return e._id === id;
-				});
+				}));
 			});
 		});
 	}
 	else 
 	{
 		console.log("No _id field");
+		res.json('bad query');
 	}
 
 });
