@@ -239,8 +239,7 @@ app.get('/getMember/:param?', (req, res) => {
 					return console.error('Error converting data to array');
 				}
 				const string = req.params.param;
-				const id = string.slice(string.indexOf('='), string.length);
-				console.log(id);
+				const id = string.slice(string.indexOf('=') + 1, string.length);
 				return result.map((e,i,a) => {
 					return e._id === id;
 				});
