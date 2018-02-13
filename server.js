@@ -226,13 +226,10 @@ app.get('/data/:param?', (req, res) => {
 });
 
 app.get('/getMember/:param?', (req, res) => {
-	console.log(req.params);
-	console.log(req.params.param);
 	if (
-		"_id" in req.body
+		"_id" in req.params.param
 		)
 	{
-		console.log(req.params.param);
 		MongoClient.connect(process.env.MONGO_URI, function (err, db) {
 			if (err) {
 				return console.error('Connection Error. @mongodb');
@@ -241,8 +238,11 @@ app.get('/getMember/:param?', (req, res) => {
 				if (err) {
 					return console.error('Error converting data to array');
 				}
+				const string = req.params.param;
+				const id = string.slice(string.indexOf('='), string.length);
+				console.log(id);
 				return result.map((e,i,a) => {
-					return e._id === req.params.param._id;
+					return e._id === id;
 				});
 			});
 		});
