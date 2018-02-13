@@ -60,14 +60,18 @@
 							</div>
 							<div class="card-action center-align">
 								<!-- <span ng-if="(e.interests.length)" style="cursor:pointer;" class="activator center-align"><i class="material-icons">navigation</i></span> -->
-                <span data-first_name="{{e.first_name}}"
+                <span 
+				  data-_id="{{e._id}}"
+                  data-first_name="{{e.first_name}}"
                   data-last_name="{{e.last_name}}"
                   data-affiliation="{{e.affiliation}}"
                   data-role="{{e.role}}"
                   data-email="{{e.email}}"
 									data-full_name="{{e.first_name}} {{e.last_name}}"
                   class="removeIcon" style="cursor:pointer;"><i class="material-icons">close</i></span>
-                <span data-first_name="{{e.first_name}}"
+                <span 
+                  data-_id="{{e._id}}"
+                  data-first_name="{{e.first_name}}"
                   data-last_name="{{e.last_name}}"
                   data-affiliation="{{e.affiliation}}"
                   data-role="{{e.role}}"
@@ -178,6 +182,7 @@
 				card.append(form);
 				$('#finish').click(function() {
 					let obj = {
+						_id: $('#_id').val(),
 						first_name: $('#first_name').val(),
 						last_name: $('#last_name').val(),
 						affiliation: $('#affiliation').val(),
@@ -214,11 +219,12 @@
     function deleteRequest(obj) {
       $.ajax({
         url: 'https://dahi.manoa.hawaii.edu/njs/edit' + '?' + $.param({
-          first_name: obj['first_name'],
-          last_name: obj['last_name'],
-          affiliation: obj['affiliation'],
-          role: obj['role'],
-          email: obj['email']
+        	_id: obj['_id'],
+			first_name: obj['first_name'],
+			last_name: obj['last_name'],
+			affiliation: obj['affiliation'],
+			role: obj['role'],
+			email: obj['email']
         }),
         type: 'DELETE'
       });
@@ -227,7 +233,7 @@
       $.ajax({
         url: 'https://dahi.manoa.hawaii.edu/njs/edit',
         type: 'PUT',
-				data: obj
+		data: obj
       })
     }
   </script>

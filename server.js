@@ -33,8 +33,8 @@ app.get('/', (req, res) => {
 	if (req.query.ticket) {
 		request(`https://authn.hawaii.edu/cas/validate?service=https://dahi.manoa.hawaii.edu/njs&ticket=${req.query.ticket}`, function (err, response, data) {
       if (data.trim() !== "no") {
-				return res.sendFile(path.join(__dirname, 'authenticated.html'));
-			}
+			return res.sendFile(path.join(__dirname, 'authenticated.html'));
+		}
 		});
 	} else {
 		return res.sendFile(path.join(__dirname, 'public/index.html'));
@@ -108,6 +108,7 @@ app.post('/create', (req, res) => {
 
 app.put('/edit', function (req, res) {
 	indicative.validateAll(req.body, {
+		_id: 'required',
 		first_name: 'required',
 		last_name: 'required',
 		affiliation: 'required',
@@ -121,7 +122,7 @@ app.put('/edit', function (req, res) {
 				return console.error('Connection Error. @mongodb');
 			}
 			try {
-				db.collection('people').updateOne({first_name: req.body.first_name}, {$set: req.body});
+				db.collection('people').updateOne({_id: req.body._id}, {$set: req.body});
 			} catch (err) {
 				console.error('Error Inserting. @mongodb');
 			}
@@ -136,7 +137,10 @@ app.put('/edit', function (req, res) {
 });
 
 app.delete('/edit', function (req, res) {
-	if (('first_name' in req.query) && ('last_name' in req.query) && ('affiliation' in req.query) && ('role' in req.query) && ('email' in req.query)) {
+	indicative.validateAll(req.body, {
+		_id: 'required'
+	})
+	.then(function() {
 		MongoClient.connect(process.env.MONGO_URI, function (err, db) {
 			if (err) {
 				return console.error('Connection Error. @mongodb');
@@ -149,9 +153,11 @@ app.delete('/edit', function (req, res) {
 			db.close();
 			return res;
 		});
-	} else {
-		console.log(`${JSON.stringify(req.query)} did not pass validation. @app.delete`);
-	}
+	})
+	.catch(function (errors) {
+		console.log(`${JSON.stringify(req.body)} did not pass validation. @app.delete /edit`);
+		return errors;
+	});
 });
 
 app.get('/data/:param?', (req, res) => {
@@ -171,7 +177,7 @@ app.get('/data/:param?', (req, res) => {
 			const valid = [];
 			if (req.params.param) {
 				const params = req.params.param.split('|');
-				const keys = ['first_name', 'last_name', 'affiliation', 'role', 'video_link', 'video', 'email', 'website_link'];
+				const keys = ['_id', 'first_name', 'last_name', 'affiliation', 'role', 'video_link', 'video', 'email', 'website_link'];
 				if (params.length === 1 && keys.includes(params[0])) {
 					data.forEach(e => {
 						let temp = {};
