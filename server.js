@@ -241,7 +241,7 @@ app.get('/getMember/:param?', (req, res) => {
 				const string = req.params.param;
 				const id = string.slice(string.indexOf('=') + 1, string.length);
 				res.json(result.filter((e,i,a) => {
-					return e._id === id;
+					return e._id.str === id;
 				}));
 			});
 		});
