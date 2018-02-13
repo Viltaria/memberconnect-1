@@ -240,7 +240,7 @@ app.get('/getMember/:param?', (req, res) => {
 				}
 				const string = req.params.param;
 				const id = string.slice(string.indexOf('=') + 1, string.length);
-				res.json(es.jresult.map((e,i,a) => {
+				res.json(result.map((e,i,a) => {
 					return e._id === id;
 				}));
 			});
